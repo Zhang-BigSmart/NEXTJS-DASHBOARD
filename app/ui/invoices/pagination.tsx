@@ -9,12 +9,17 @@ import { usePathname, useSearchParams } from 'next/navigation';
 export default function Pagination({ totalPages }: { totalPages: number }) {
   // NOTE: comment in this code when you get to this point in the course
 
+  // 获取当前页面的路径
   const pathname = usePathname();
+  // 获取当前页面的查询参数
   const searchParams = useSearchParams();
+  // 获取页码
   const currentPage = Number(searchParams.get('page')) || 1;
+  // 生成分页逻辑 [1,2,3,...,n-1,n]
   const allPages = generatePagination(currentPage, totalPages);
 
   const createPageURL = (pageNumber: number | string) => {
+    // 从当前页面的查询参数 searchParams 初始化的，是一个包含当前页面URL查询字符串参数的对象
     const params = new URLSearchParams(searchParams);
     params.set('page', pageNumber.toString());
     return `${pathname}?${params.toString()}`;
